@@ -1,6 +1,8 @@
 # LDIFGenerator
 The LDIF Generator will generate random, fictitious, LDIF records that can be imported into LDAP server or other applications for testing.
 
+Program was orginally from [LDAPWIKI](http://ldapwiki.com/wiki/LDIF%20Generator) and now open source.
+
 The LDIF Generator will generate random, fictitious, LDIF records that can be imported into LDAP server or other applications for testing.
 We have used the DBGEN.PL program and had several problems with some of the aspects of the output that was generated. The attributes that used distinguished names, DBGEN only provided RDNs for these entries. When we were working with Novell's eDirectory or with Active Directory, it actually does some referential integrity checking that would prevent the importing of DN attributes that were not valid. The LDIF Generator tool will create valid manager and secretary relationships.
 
