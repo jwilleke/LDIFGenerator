@@ -25,19 +25,18 @@ java -jar LDIFGen.jar
 The program expects to find the "Data" directory where the LDIFGen.jar file is located. This can be changed within the GUI.
 
 You will need to change the following to fit your needs:
+* Base Added to Generated Records: All records will be added to this base context.
+* Number of Records - This is the number of records that will be generated. (Defaults to 100). Must be more than 10. NOTE: there maybe a couple of less records as some duplicates maybe created, and they may be dropped.
+* Generate OUs - If this is checked, OUs will be generated in the LDIF file. This should normally be checked unless the OUs have already been created. If Not checked, then all users will be put in the "Base Added to Generated Records"
+* Generate People - If this is checked, the people entries will be generated. This is normally checked and inetOrgPerson objects will be generated. If not checked only the OUs will be generated.
+* DN Uses uid vs cn - For those installations that need the uid=username instead of cn=username. Normally this is not checked with eDirectory.
+* "Numeric in DN, CN UID" - Allows the DN and cn or UID to be generated as numbers. This is often helpful if you need to generate test accounts that can be programatically tested by binding with cn=1096 and then cn=1096+1 (cn=1097).
+* Directory where input data is stored - This is where the data files are located. By default, the data input files are stored in the data directory in the root where the application was installed.
+* File where output records will be written - The generated records will be written to this file.
+* Server Specific (DropDown)- Normally this should be left at Generic. If you are using Active Directory, you must choose it here as Active Directory requires a specific attribute, (sAMAccountName), to be added to the inetOrgPerson objectclass.
+* ChangeType (DropDown) - Some server import routines need a ChangeType record to for importing. Also, you might want to set the changeType to Add, so you can do a search and replace to change it to delete so you could delete the records that were added.
 
-Base Added to Generated Records: All records will be added to this base context.
-Number of Records - This is the number of records that will be generated. (Defaults to 100). Must be more than 10. NOTE: there maybe a couple of less records as some duplicates maybe created, and they may be dropped.
-Generate OUs - If this is checked, OUs will be generated in the LDIF file. This should normally be checked unless the OUs have already been created. If Not checked, then all users will be put in the "Base Added to Generated Records"
-Generate People - If this is checked, the people entries will be generated. This is normally checked and inetOrgPerson objects will be generated. If not checked only the OUs will be generated.
-DN Uses uid vs cn - For those installations that need the uid=username instead of cn=username. Normally this is not checked with eDirectory.
-"Numeric in DN, CN UID" - Allows the DN and cn or UID to be generated as numbers. This is often helpful if you need to generate test accounts that can be programatically tested by binding with cn=1096 and then cn=1096+1 (cn=1097).
-Directory where input data is stored - This is where the data files are located. By default, the data input files are stored in the data directory in the root where the application was installed.
-File where output records will be written - The generated records will be written to this file.
-Server Specific (DropDown)- Normally this should be left at Generic. If you are using Active Directory, you must choose it here as Active Directory requires a specific attribute, (sAMAccountName), to be added to the inetOrgPerson objectclass.
-ChangeType (DropDown) - Some server import routines need a ChangeType record to for importing. Also, you might want to set the changeType to Add, so you can do a search and replace to change it to delete so you could delete the records that were added.
-
-# Microsoft Active Directory
+## Microsoft Active Directory
 When you select Microsoft Active Directory we:
 add SamAccountName to attributes to person entries using the value for UID
 You may want to change the Data File objectclasses.txt file to be:
@@ -46,12 +45,12 @@ You may want to change the Data File objectclasses.txt file to be:
     organizationalPerson
     user
 
-# EDirectory
+## EDirectory
 When you select "eDirectory" we add objectClasses to OUs:
 * ndsLoginProperties
 * ndsContainerLoginProperties
 
-#Data Files
+# Data Files
 The data files are similar to the files used in DBGEN program and the files that are used for DBGEN can be used with this program. By default, the data input files are stored in the data directory in the root where the application was installed. You could modify these files to make them look more like you company or situation. The files and their uses are described as follows:
 * area-codes.txt - List of area codes that will be randomly used.
 * employee-types.txt - List of employee types that will be randomly used.
