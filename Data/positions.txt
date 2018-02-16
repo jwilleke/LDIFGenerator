@@ -1,0 +1,30 @@
+Accountant
+Admin
+Architect
+Assistant
+Artist
+Consultant
+Czar
+Developer
+Dictator
+Director
+Evangelist
+Engineer
+Figurehead
+Fellow
+Grunt
+Janitor
+Madonna
+Manager
+Mascot
+Pinhead
+President
+Punk
+Sales Rep
+Stooge
+Technician
+Visionary
+Vice President
+Writer
+Warrior
+Yahoo

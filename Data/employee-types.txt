@@ -1,0 +1,5 @@
+Manager
+Employee
+Normal
+Contract
+Temp
