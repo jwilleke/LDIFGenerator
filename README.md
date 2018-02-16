@@ -65,7 +65,7 @@ The data files are similar to the files used in DBGEN program and the files that
 Feel free to change these files as you wish, just do not alter the format of the file.
 
 
-# Sample Output#[Edit]
+# Sample Output
 ## Generic LDIF
 Here is a few records from a sample output when using the "Generic" output:
     dn: ou=Payroll,dc=willeke, dc=com
