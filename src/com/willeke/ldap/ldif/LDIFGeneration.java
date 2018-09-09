@@ -21,10 +21,10 @@ import org.apache.log4j.LogManager;
  * Original code donated to apache.org in early 2013.
  * 
  * @author jim@willeke.com
- * @version 2013-12-12-11:21:13
+ * @version 2018-09-09-06:23:570
  */
 public class LDIFGeneration {
-	private static final String BUILD = "2013-12-12-11:21:13";
+	private static final String BUILD = "2018-09-09-06:23:57";
 	private static final String CLASSNAME = LDIFGeneration.class.getName();
 	static org.apache.log4j.Logger log = LogManager.getLogger(CLASSNAME);// DumpPasswordInformation.class.getName());
 	private static ArrayList<String> orgUnits = new ArrayList<String>();
