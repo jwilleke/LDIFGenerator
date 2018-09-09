@@ -21,10 +21,10 @@ import org.apache.log4j.LogManager;
  * Original code donated to apache.org in early 2013.
  * 
  * @author jim@willeke.com
- * @version 2018-09-09-06:23:570
+ * @version 2018-09-09-08:50:21
  */
 public class LDIFGeneration {
-	private static final String BUILD = "2018-09-09-06:23:57";
+	private static final String BUILD = "2018-09-09-08:21:39";
 	private static final String CLASSNAME = LDIFGeneration.class.getName();
 	static org.apache.log4j.Logger log = LogManager.getLogger(CLASSNAME);// DumpPasswordInformation.class.getName());
 	private static ArrayList<String> orgUnits = new ArrayList<String>();
@@ -41,23 +41,22 @@ public class LDIFGeneration {
 	private static final ArrayList<String> possibleDirectoryServerTypes = new ArrayList<String>();
 	private static final String NL = System.getProperties().getProperty("line.separator");
 	private static RandomAccessFile input;
-
 	private static String dataPath = System.getProperty("user.dir") + System.getProperty("file.separator") + "Data";
 	private static String baseDN = "ou=people,dc=willeke,dc=com";
 	private static String outPutFilename = System.getProperty("user.home") + System.getProperty("file.separator")
 			+ "ldifgen.ldif";
 	private static String[] objectClass;
 	private static String changeType = "None";
-	private static String serverType = "Generic"; // GENERIC, MAD, EDIRECTORY 
+	private static String serverType = "Generic";
 	private static boolean isPeople = true;
 	private static boolean isCreateOUs = true;
 	private static boolean isUidNaming = true;
 	private static boolean useShortNames = true;
 	private static boolean overWriteExitingOutput = true;
 	private static boolean toLowerCase = true;
+	private static boolean isShortNameNumeric = true; //generates values for uid, 
 	private static int shortNameLength = 8;
 	private static int numberOfEntries = 11;
-		
 
 	private static void showHelp() {
 		log.info("The Defaults are: (All of these can be changed!) BUILD: " + BUILD);
@@ -76,48 +75,104 @@ public class LDIFGeneration {
 		log.info("Over-Write Exiting Output File: " + overWriteExitingOutput);
 		log.info("Shift Short Name Values to lowercase: " + toLowerCase);
 		log.info("Short Name Value Length: " + shortNameLength);
+		log.info("Make shortNames numeric? " + isShortNameNumeric);
 		log.info("Number Of Entries to Generate: " + numberOfEntries);
 		log.info("Sample Command Lines:");
 		log.info("java -jar " + CLASSNAME + " help\n");
 		log.info("java -jar " + CLASSNAME + " baseDN  numberOfEntries\n");
 		log.info("java -jar " + CLASSNAME + " baseDN  serverType numberOfEntries\n");
 		log.info("java -jar " + CLASSNAME
-				+ " dataPath baseDN outPutFilename objectClass changeType serverType isPeople isCreateOUs isUserUid useShortNames toLowerCase overWriteExitingOutput shortNameLength numberOfEntries\n");
+				+ " dataPath baseDN outPutFilename objectClass changeType serverType isPeople isCreateOUs isUserUid useShortNames toLowerCase overWriteExitingOutput shortNameLength isShortNameNumeric numberOfEntries\n");
 	}
 
-	// dataPath, baseDN, outPutFilename, objectClass, changeType, serverType,
-	// isPeople, isCreateOUs, isUserUid, useShortNames, overWriteExitingOutput,
-	// toLowerCase, shortNameLength, numberOfEntrie
-
+	/**
+	 * 
+	 * @param help
+	 */
 	public static void generateLDIF(String help) {
 		fillFixedArrays();
 		showHelp();
 	}
 
+	/**
+	 * Simple Constructor
+	 * @param baseDN
+	 * @param numberOfEntries
+	 */
 	public static void generateLDIF(String baseDN, int numberOfEntries) {
 		fillFixedArrays();
 		generateLDIF(dataPath, baseDN, outPutFilename, objectClass, changeType, serverType, isPeople, isCreateOUs,
-				isUidNaming, useShortNames, toLowerCase, overWriteExitingOutput, shortNameLength, numberOfEntries);
+				isUidNaming, useShortNames, toLowerCase, overWriteExitingOutput, shortNameLength, isShortNameNumeric,
+				numberOfEntries);
 	}
 
+	/**
+	 * Simple Constructor
+	 * @param baseDN
+	 * @param numberOfEntries
+	 * @param serverType
+	 */
 	public static void generateLDIF(String baseDN, int numberOfEntries, String serverType) {
 		fillFixedArrays();
 		generateLDIF(dataPath, baseDN, outPutFilename, objectClass, changeType, serverType, isPeople, isCreateOUs,
-				isUidNaming, useShortNames, toLowerCase, overWriteExitingOutput, shortNameLength, numberOfEntries);
+				isUidNaming, useShortNames, toLowerCase, overWriteExitingOutput, shortNameLength, isShortNameNumeric,
+				numberOfEntries);
 	}
 
+	/**
+	 * Full Constructor
+	 * @param dataPath
+	 * @param baseDN
+	 * @param outPutFilename
+	 * @param objectClass
+	 * @param changeType
+	 * @param serverType
+	 * @param isPeople
+	 * @param isCreateOUs
+	 * @param isUserUid
+	 * @param useShortNames
+	 * @param toLowerCase
+	 * @param overWriteExitingOutput
+	 * @param shortNameLength
+	 * @param isShortNameNumeric
+	 * @param numberOfEntries
+	 */
 	public static void generateLDIF(String dataPath, String baseDN, String outPutFilename, String[] objectClass,
 			String changeType, String serverType, boolean isPeople, boolean isCreateOUs, boolean isUserUid,
 			boolean useShortNames, boolean toLowerCase, boolean overWriteExitingOutput, int shortNameLength,
-			int numberOfEntries) {
+			boolean isShortNameNumeric, int numberOfEntries) {
 		fillFixedArrays();
+		// Show parameters we are using
+		int xx = 0;
+		log.info("[" + xx++ + "] dataPath: " + dataPath);
+		log.info("[" + xx++ + "] baseDN: " + baseDN);
+		log.info("[" + xx++ + "] outPutFilename: " + outPutFilename);
+		log.info("[" + xx++ + "] objectClass: " + objectClass);
+		log.info("[" + xx++ + "] changeType: " + changeType);
+		log.info("[" + xx++ + "] serverType: " + serverType);
+		log.info("[" + xx++ + "] isPeople: " + isPeople);
+		log.info("[" + xx++ + "] isCreateOUs: " + isCreateOUs);
+		log.info("[" + xx++ + "] isUserUid: " + isUserUid);
+		log.info("[" + xx++ + "] useShortNames: " + useShortNames);
+		log.info("[" + xx++ + "] toLowerCase: " + toLowerCase);
+		log.info("[" + xx++ + "] overWriteExitingOutput: " + overWriteExitingOutput);
+		log.info("[" + xx++ + "] shortNameLength: " + shortNameLength);
+		log.info("[" + xx++ + "] isShortNameNumeric: " + isShortNameNumeric);
+		log.info("[" + xx++ + "] numberOfEntries: " + numberOfEntries);
+		// Initialize output file and check if it exists and determine if we should overWrite file
 		FileWriter fileWriter = null;
 		BufferedWriter bufferedWriter = null;
-
 		File outPutFile = new File(outPutFilename);
 		if (outPutFile.exists()) {
 			try {
-				log.warn("Overwriting file at: " + outPutFile.getCanonicalPath() + " Exists!");
+				if(overWriteExitingOutput)
+				{
+					log.warn("File at: " + outPutFile.getCanonicalPath() + " Exists! File will be OVERWRITTEN!");
+				}
+				else
+				{
+					log.warn("File at: " + outPutFile.getCanonicalPath() + " Exists! Records will be APPENDED!");
+				}
 			} catch (IOException e) {
 				log.error("Could not initialise file: " + outPutFilename + "\n" + e);
 				System.exit(1);
@@ -147,27 +202,28 @@ public class LDIFGeneration {
 			}
 		}
 		bufferedWriter = new BufferedWriter(fileWriter);
+		// Tell people where we are putting the output file
 		log.debug("output file is: " + outPutFilename);
 		init(dataPath);
-		// RandomAccessFile outputFile = null;
+		// check some things
 		if (changeType.equalsIgnoreCase("None")) {
 			changeType = "";
 		} else {
 			verifySomeInputs(changeType, possibleChangeTypes);
 		}
 		verifySomeInputs(serverType, possibleDirectoryServerTypes);
-		dbGen(baseDN, bufferedWriter, objectClass, serverType, serverType, isPeople, isCreateOUs, isUserUid,
+		// Generate Files
+		dbGen(baseDN, bufferedWriter, objectClass, changeType, serverType, isPeople, isCreateOUs, isUserUid,
 				useShortNames, overWriteExitingOutput, shortNameLength, numberOfEntries);
 	}
 
 	/**
+	 * Initialize some things 
 	 * @param dataPath
 	 */
 	private static void init(String dataPath) {
-
-		fillFixedArrays();
-		fillArrays(dataPath);
-
+		fillFixedArrays(); // fill these first. These must be done to show help.
+		fillArrays(dataPath); 
 	}
 
 	/**
@@ -184,6 +240,9 @@ public class LDIFGeneration {
 		}
 	}
 
+	/**
+	 * Clear and then fill the fixed arrays
+	 */
 	private static void fillFixedArrays() {
 		possibleChangeTypes.clear();
 		possibleChangeTypes.add("None");
@@ -205,22 +264,22 @@ public class LDIFGeneration {
 		objectClass = (String[]) defaultObjectClasses.toArray(new String[defaultObjectClasses.size()]);
 	}
 
-	/**
-	 * Where we do the file generation
-	 * 
-	 * @param baseDN
-	 * @param bufferedWriter
-	 * @param objectClass
-	 * @param changeType
-	 * @param serverType
-	 * @param isPeople
-	 * @param isCreateOUs
-	 * @param isUserUid
-	 * @param useShortNames
-	 * @param overWriteExitingOutput
-	 * @param shortNameLength
-	 * @param numberOfEntries
-	 */
+/**
+ * Do the file generation:
+ * 
+ * @param baseDN
+ * @param bufferedWriter
+ * @param objectClass
+ * @param changeType
+ * @param serverType
+ * @param isPeople
+ * @param isCreateOUs
+ * @param isUserUid
+ * @param useShortNames
+ * @param overWriteExitingOutput
+ * @param shortNameLength
+ * @param numberOfEntries
+ */
 	public static void dbGen(String baseDN, BufferedWriter bufferedWriter, String[] objectClass, String changeType,
 			String serverType, boolean isPeople, boolean isCreateOUs, boolean isUserUid, boolean useShortNames,
 			boolean overWriteExitingOutput, int shortNameLength, int numberOfEntries) {
@@ -229,11 +288,9 @@ public class LDIFGeneration {
 		ArrayList<String> mgrAL = new ArrayList<String>(); // mgrAL is all the managers dns we have so far
 		ArrayList<String> secAL = new ArrayList<String>(); // secAL is all the secretaries we have so far.
 		String str;
-		// Need BaseDN, People? OU?, NUM, File for Out, Dir for In, Server Type
-
 		try {
-			bufferedWriter.write("version: 1" + NL);
-			if (isCreateOUs) { // Generate OrganizationalUnits ?
+			bufferedWriter.write("version: 1" + NL); // set LDIF version ALWAYS Static
+			if (isCreateOUs) { // Generate OrganizationalUnits 
 				for (int i = 0; i < orgUnits.size(); i++) {
 					bufferedWriter.write(NL + "dn: ou=" + orgUnits.get(i) + "," + baseDN);
 					log.debug("Adding OU (" + i + 1 + "): " + "dn: ou=" + orgUnits.get(i) + "," + baseDN);
@@ -256,11 +313,6 @@ public class LDIFGeneration {
 					// Would like an Counter to tell how far along we are. If we are generating
 					// 1,000,000 it takes so long. Would like to know at each 100 or 1000 entries
 					// The Manager and Sec entries do not work well with less than 10
-					if ((userCount % 10 == 0) || (userCount == numberOfEntries)) { // Update ProgressBar every 10
-																					// entries
-																					// PBar.setValue(x);
-																					// PBar.update(PBar.getGraphics());
-					}
 					// Get the random items for this Entry that we use in other things
 					String sn = getRand(familyNames);
 					String gn = getRand(givenNames);
@@ -270,8 +322,7 @@ public class LDIFGeneration {
 					String displayName = generateDisplayName(sn, gn);
 					String shortName = generateShortName(sn, gn, shortNameLength, true, userCount);
 					String dn = generateDn(baseDN, isUserUid, useShortNames, displayName, shortName, ou);
-
-					// Check to see dn already exists
+					// Check to see DN already exists
 					if (dnAL.contains(dn)) { // Duplicate entry increment Counter and loop so we try again
 						userCount = userCount - 1;
 						log.debug("Duplicate (Skipping): " + dn);
@@ -482,36 +533,50 @@ public class LDIFGeneration {
 	}
 
 	/**
-	 * Issues with too many collisions when shortNameLength is 8 
-	 * When we make shortNameLength longer, we need to be able to pad the values.
+	 * Issues with too many collisions when shortNameLength is 8 When we make
+	 * shortNameLength longer, we need to be able to pad the values.
+	 * 
 	 * @param sn
 	 * @param gn
 	 * @return
 	 */
-	private static String generateShortName(String sn, String gn, int shortNameLength, boolean toLowerCase, int userCount) {
+	private static String generateShortName(String sn, String gn, int shortNameLength, boolean toLowerCase,
+			int userCount) {
 		String shortName;
-		if (sn.length() >= shortNameLength) {
-			shortName = sn.substring(0, shortNameLength) + gn.substring(0, 1);
-		} else {
-			shortName = sn.substring(0, sn.length()) + gn.substring(0, 1);
-		}
-		if (shortName.length() < shortNameLength)
-		{
-			int countPad = String.valueOf(userCount).length();
-			shortName = padRight(shortName, shortNameLength-countPad) +userCount;
-		}
-		if (toLowerCase) {
-			return shortName.toLowerCase();
-		} else {
+		if (isShortNameNumeric) {
+			shortName = String.valueOf(userCount);
+			if (shortName.length() < shortNameLength) {
+				shortName = padLeft(shortName, shortNameLength);
+			}
 			return shortName;
+		} else {
+			if (sn.length() >= shortNameLength) {
+				shortName = sn.substring(0, shortNameLength) + gn.substring(0, 1);
+			} else {
+				shortName = sn.substring(0, sn.length()) + gn.substring(0, 1);
+			}
+			if (shortName.length() < shortNameLength) {
+				int countPad = String.valueOf(userCount).length();
+				shortName = padRight(shortName, shortNameLength - countPad) + userCount;
+			}
+			if (toLowerCase) {
+				return shortName.toLowerCase();
+			} else {
+				return shortName;
+			}
 		}
 	}
 
-	  // pad with " " to the right to the given length (n)
-	  static String padRight(String s, int n) {
-		 return String.format("%1$-" + n + "s", s).replace(' ', '0');
-	  }
-	
+	// pad with " " to the right to the given length (n)
+	static String padRight(String s, int n) {
+		return String.format("%1$-" + n + "s", s).replace(' ', '0');
+	}
+
+	// padLeft
+	static String padLeft(String s, int n) {
+		return String.format("%1$" + n + "s", s).replace(' ', '0');
+	}
+
 	/**
 	 * Check to see if a file already exist
 	 * 
@@ -522,12 +587,6 @@ public class LDIFGeneration {
 		// Check to see if file exists and deal with it!
 		if (fileName.exists()) {
 			System.out.println("File: " + fileName + " Already Exist: ");
-
-			// JOptionPane pop = new JOptionPane("File Already Exist! OverWrite?",
-			// JOptionPane.QUESTION_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
-			// JDialog dlg = pop.createDialog(this, "Please");
-			// dlg.setVisible(true);
-			// Object answer = pop.getValue();
 			String answer = "Yes";
 			if (answer.equalsIgnoreCase("Yes")) {
 				fileName.delete();
@@ -643,6 +702,7 @@ public class LDIFGeneration {
 	}
 
 	/**
+	 * Provide an input for testing and ease of use
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -654,7 +714,7 @@ public class LDIFGeneration {
 			serverType = args[2];
 			numberOfEntries = Integer.parseInt(args[3]);
 			LDIFGeneration.generateLDIF(baseDN, numberOfEntries, serverType);
-		} else if (args.length == 14) {
+		} else if (args.length == 15) {
 			dataPath = args[0];
 			baseDN = args[1];
 			outPutFilename = args[2];
@@ -668,10 +728,11 @@ public class LDIFGeneration {
 			overWriteExitingOutput = Boolean.parseBoolean(args[10]);
 			toLowerCase = Boolean.parseBoolean(args[11]);
 			shortNameLength = Integer.parseInt(args[12]);
-			numberOfEntries = Integer.parseInt(args[13]);
+			isShortNameNumeric = Boolean.parseBoolean(args[13]);
+			numberOfEntries = Integer.parseInt(args[14]);
 			LDIFGeneration.generateLDIF(dataPath, baseDN, outPutFilename, objectClass, changeType, serverType, isPeople,
 					isCreateOUs, isUidNaming, useShortNames, overWriteExitingOutput, toLowerCase, shortNameLength,
-					numberOfEntries);
+					isShortNameNumeric, numberOfEntries);
 		} else {
 			fillFixedArrays();
 			showHelp();
