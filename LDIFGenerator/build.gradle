@@ -1,0 +1,20 @@
+plugins {
+    id 'application'
+}
+
+mainClassName = "com.willeke.LDIFGenerator"
+executableDir = ""
+
+dependencies {
+    compile deps.log4j
+}
+
+distributions {
+    main {
+        contents {
+            from {
+                "archiveIncludes"
+            }
+        }
+    }
+}
