@@ -5,7 +5,7 @@ The LDIF Generator will generate random, fictitious, LDIF records that can be im
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### Downloads of Earlier Versions
-To run the application, download the original compiled versions from [ldapwiki] (https://ldapwiki.com/wiki/LDIF%20Generator) extract the ZIP or TAR file, and follow the steps in the extracted `README`.
+To run the application, download the original compiled versions from [ldapwiki](https://ldapwiki.com/wiki/LDIF%20Generator) extract the ZIP or TAR file, and follow the steps in the extracted `README`.
 * [LDIF Generator/LDIFGen2014-09-01.zip(info) - Version 0.1.0](http://ldapwiki.com/wiki/Java%20Versions%20And%20Running%20Programs)
 * [LDIF Generator - Version 0.0.1](https://ldapwiki.com/attach/LDIF%20Generator/LDIFGen.zip)
 
