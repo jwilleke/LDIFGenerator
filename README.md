@@ -7,7 +7,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Downloads of Earlier Versions
 To run the application, download the original compiled versions from [ldapwiki] (https://ldapwiki.com/wiki/LDIF%20Generator) extract the ZIP or TAR file, and follow the steps in the extracted `README`.
 * [LDIF Generator/LDIFGen2014-09-01.zip(info) - Version 0.1.0](http://ldapwiki.com/wiki/Java%20Versions%20And%20Running%20Programs)
-* [hLDIF Generator - Version 0.0.1](https://ldapwiki.com/attach/LDIF%20Generator/LDIFGen.zip)
+* [LDIF Generator - Version 0.0.1](https://ldapwiki.com/attach/LDIF%20Generator/LDIFGen.zip)
 
 ## Building
 We use Gradle as our build tool of choice. See [individual project `READMEs`](LDIFGenerator/README.md) for details.
@@ -15,8 +15,10 @@ We use Gradle as our build tool of choice. See [individual project `READMEs`](LD
 ## Prerequisites
 To build, you must have at least JDK 8. The project output currently targets Java 1.4.
 
+You should also read notes on [Java Versions And Running Programs](http://ldapwiki.com/wiki/Java%20Versions%20And%20Running%20Programs)
+
 ## Contributing
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](https://github.com/jwilleke/LDIFGenerator/blob/master/CONTRIBUTING.md) for our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
@@ -88,13 +90,6 @@ Here are a few records from a sample output when using the "Generic" output:
     roomNumber: 9562
     secretary: cn=100135, ou=Human Resources, dc=willeke, dc=com
     manager: cn=100474, ou=Administrative, dc=willeke, dc=com 
-
-[Java Versions And Running Programs](http://ldapwiki.com/wiki/Java%20Versions%20And%20Running%20Programs)
-
-## LDIFGen Downloads
-The original downloads from [ldapwiki] (https://ldapwiki.com/wiki/LDIF%20Generator)
-* [LDIF Generator/LDIFGen2014-09-01.zip(info) - Version 0.1.0](http://ldapwiki.com/wiki/Java%20Versions%20And%20Running%20Programs)
-* [hLDIF Generator - Version 0.0.1](https://ldapwiki.com/attach/LDIF%20Generator/LDIFGen.zip)
 
 ## Related Articles 
 * [Cool Solutions: Easily Generate LDIF File for Testing](https://www.netiq.com/communities/cool-solutions/cool_tools/easily-generate-ldif-file-testing/) 
