@@ -1,7 +1,4 @@
 # LDIFGenerator
-[![GitHub forks](https://img.shields.io/github/forks/activescott/lessmsi.svg)](https://github.com/activescott/lessmsi/network)
-[![GitHub stars](https://img.shields.io/github/stars/activescott/lessmsi.svg)](https://github.com/activescott/lessmsi/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/activescott/lessmsi.svg)](https://github.com/activescott/lessmsi/issues)
 The LDIF Generator will generate random, fictitious, LDIF records that can be imported into LDAP server or other applications for testing.
 
 ## Getting Started
