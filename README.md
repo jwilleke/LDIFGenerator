@@ -71,7 +71,9 @@ Here are a few records from a sample output when using the "Generic" output:
 [Java Versions And Running Programs](http://ldapwiki.com/wiki/Java%20Versions%20And%20Running%20Programs)
 
 ## LDIFGen Downloads
-* [LDIF Generator/LDIFGen2014-09-01.zip(info) - Latest Version](http://ldapwiki.com/wiki/Java%20Versions%20And%20Running%20Programs)
+The original downloads from [ldapwiki] (https://ldapwiki.com/wiki/LDIF%20Generator)
+* [LDIF Generator/LDIFGen2014-09-01.zip(info) - Version 0.1.0](http://ldapwiki.com/wiki/Java%20Versions%20And%20Running%20Programs)
+* [hLDIF Generator - Version 0.0.1](https://ldapwiki.com/attach/LDIF%20Generator/LDIFGen.zip)
 
 ## Related Articles 
 * [Cool Solutions: Easily Generate LDIF File for Testing](https://www.netiq.com/communities/cool-solutions/cool_tools/easily-generate-ldif-file-testing/) 
