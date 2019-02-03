@@ -36,24 +36,24 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Purpose & History
 Program was orginally from [LDAPWIKI](http://ldapwiki.com/wiki/LDIF%20Generator) and now open source.
 
-We have used the DBGEN.PL program and had several problems with some of the aspects of the output that was generated. The attributes that used distinguished names, DBGEN only provided RDNs for these entries. When we were working with Novell's eDirectory or with Active Directory, it actually does some referential integrity checking that would prevent the importing of DN attributes that were not valid. The LDIF Generator tool will create valid manager and secretary relationships.
+We had used the [DBGEN.PL](https://docs.oracle.com/cd/E19199-01/816-6400-10/dbgen.html), sorry do not know the origins of dbgen.pl assume [SUN Microsystems](https://en.wikipedia.org/wiki/Sun_Microsystems),program and had several problems with some of the aspects of the output that was generated. The attributes that used distinguished names, DBGEN only provided RDNs for these entries. When we were working with [eDirectory](https://en.wikipedia.org/wiki/NetIQ_eDirectory) or with [Microsoft Active Directory](https://en.wikipedia.org/wiki/Active_Directory), it actually does some referential integrity checking that would prevent the importing of DN attributes that were not valid. The LDIF Generator tool will create valid manager and secretary relationships within the appropriate order.
 
 In addition, we wanted to generate some large trees and demo some of the Organizational chart programs that would work against a LDAP instance that would simulate a real organization.
 
-Out of these issues with DBGEN, we wrote LDIFGen. This is a Java program that should work with Java 1.4 or above and on "nearly" any platform that has Java.
+Out of these issues with DBGEN, we wrote LDIFGen. Which is a Java program that should work with Java on "nearly" any platform that has Java.
 
 You must generate at least 10 records. There is no maximum determined. (There could be some resource issues at very large numbers over 1,000,000) Below we show typical screen output of the tool generating about 500 entries/sec:
-
+```
     Generating 100000 entries.
     With People entries With 40 OUs entries
     Using CN in Distinguished NameIn the dc=willeke, dc=com context
     For the Generic Server Type
     Generating 100000 entries took 3 minute(s) 19 second(s)  or 502.513 entries/seconds
-
+```
 ## Sample Output
 ### Generic LDIF
 Here are a few records from a sample output when using the "Generic" output:
-
+```
     dn: ou=Payroll,dc=willeke, dc=com
     changetype: add
     ou: Payroll
@@ -90,6 +90,7 @@ Here are a few records from a sample output when using the "Generic" output:
     roomNumber: 9562
     secretary: cn=100135, ou=Human Resources, dc=willeke, dc=com
     manager: cn=100474, ou=Administrative, dc=willeke, dc=com 
+```
 
 ## Related Articles 
 * [Cool Solutions: Easily Generate LDIF File for Testing](https://www.netiq.com/communities/cool-solutions/cool_tools/easily-generate-ldif-file-testing/) 
